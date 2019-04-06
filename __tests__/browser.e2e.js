@@ -46,10 +46,42 @@ test('2nd player should win the game', async () => {
   await clickACellAt(6);
   await clickACellAt(2);
 
-  expect(await hasWinner()).toBe(true);
+  expect(await getWinnerMessage()).toBe(`${player2} won!`);
+});
+
+test('1st player should win by diagonal', async () => {
+  await navigate();
+  await newGame(player1, player2);
+
+  await clickACellAt(0);
+  await clickACellAt(1);
+  await clickACellAt(4);
+  await clickACellAt(2);
+  await clickACellAt(8);
+
+  expect(await getWinnerMessage()).toBe(`${player1} won!`);
+});
+
+test('2nd player should win by diagonal', async () => {
+  await navigate();
+  await newGame(player1, player2);
+
+  await clickACellAt(1);
+  await clickACellAt(0);
+  await clickACellAt(3);
+  await clickACellAt(4);
+  await clickACellAt(2);
+  await clickACellAt(8);
 
   expect(await getWinnerMessage()).toBe(`${player2} won!`);
 });
+
+// test('should not play if not registered', async () => {
+//   await navigate();
+//   await clickACellAt(0);
+//
+//   expect(await );
+// });
 
 function getWinnerMessage() {
   return page.$eval('[data-testid="winner-message"]', el => el.innerText);
