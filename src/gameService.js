@@ -1,5 +1,3 @@
-export function gameStatus(board) {
-  if (board[0].every(cell => cell === 'X')) {
-    return 'X';
-  }
+export function gameStatus(board, char) {
+  return board[0].every(cell => cell === char);
 }

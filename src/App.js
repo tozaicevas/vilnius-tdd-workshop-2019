@@ -13,38 +13,25 @@ function App() {
     ['', '', ''],
     ['', '', '']
   ]);
-  const [winner, setWinner] = useState('');
+  const [currentPlayer, setCurrentPlayer] = useState(player1);
+  const [winner, setWinner] = useState(null);
 
   const handleNewGame = (player1, player2) => {
     setPlayer1(player1);
     setPlayer2(player2);
+    setCurrentPlayer(player1);
   };
   const handleCellClicked = (rowIndex, colIndex) => {
+    const character = currentPlayer === player1 ? 'X' : 'Y';
     const _board = board.map(row => [...row]);
-    _board[rowIndex][colIndex] = 'X';
-    if (gameStatus(_board) === 'X') {
-      setWinner('X');
-    }
+    _board[rowIndex][colIndex] = character;
+    if (gameStatus(_board, character)) setWinner(currentPlayer);
+    else setCurrentPlayer(currentPlayer === player1 ? player2 : player1);
     setBoard(_board);
   };
 
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          data-testid="app-link"
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
       <Registration onNewGame={handleNewGame} />
       <Game
         player1={player1}
@@ -52,7 +39,7 @@ function App() {
         board={board}
         onCellClicked={handleCellClicked}
       />
-      {winner && <div data-testid="winner-message">Yaniv won!!</div>}
+      {winner && <div data-testid="winner-message">{winner} won!</div>}
     </div>
   );
 }

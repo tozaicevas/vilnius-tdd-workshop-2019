@@ -1,7 +1,7 @@
-test('should register a game', async () => {
-  const player1 = 'Yaniv';
-  const player2 = 'Computer';
+const player1 = 'Yaniv';
+const player2 = 'Computer';
 
+test('should register a game', async () => {
   await navigate();
 
   await newGame(player1, player2);
@@ -11,9 +11,6 @@ test('should register a game', async () => {
 });
 
 test('should show "X" after first player click', async () => {
-  const player1 = 'Yaniv';
-  const player2 = 'Computer';
-
   await navigate();
 
   await newGame(player1, player2);
@@ -24,9 +21,6 @@ test('should show "X" after first player click', async () => {
 });
 
 test('"X" should win the game', async () => {
-  const player1 = 'Yaniv';
-  const player2 = 'Computer';
-
   await navigate();
 
   await newGame(player1, player2);
@@ -38,7 +32,23 @@ test('"X" should win the game', async () => {
   await clickACellAt(5);
   await clickACellAt(2);
 
-  expect(await getWinnerMessage()).toBe(`${player1} won!!`);
+  expect(await getWinnerMessage()).toBe(`${player1} won!`);
+});
+
+test('2nd player should win the game', async () => {
+  await navigate();
+  await newGame(player1, player2);
+
+  await clickACellAt(3);
+  await clickACellAt(0);
+  await clickACellAt(4);
+  await clickACellAt(1);
+  await clickACellAt(6);
+  await clickACellAt(2);
+
+  expect(await hasWinner()).toBe(true);
+
+  expect(await getWinnerMessage()).toBe(`${player2} won!`);
 });
 
 function getWinnerMessage() {

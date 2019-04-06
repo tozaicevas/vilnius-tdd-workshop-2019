@@ -7,5 +7,5 @@ test('X should win', () => {
     ['', '', ''],
     ['', '', '']
   ];
-  expect(gameStatus(board)).toBe('X');
+  expect(gameStatus(board, 'X')).toBe(true);
 });

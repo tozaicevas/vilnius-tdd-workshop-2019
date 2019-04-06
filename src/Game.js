@@ -1,4 +1,5 @@
 import React from 'react';
+
 export const Game = ({ player1, player2, board, onCellClicked }) => {
   return (
     <div>
